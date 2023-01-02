@@ -1,12 +1,13 @@
-
-
-
-function Todo(props){
-  console.log(props)
-  return(
-     <li data-todos-index={props.todo._id}>
+const Todo = (props) => {
+  const deleteClickedTodo = () => {
+    props.deleteTodo(props.todo);
+  };
+  return (
+    <li data-todos-index={props.todo._id}>
       <span className="todo-item">{props.todo.body}</span>
+      <span className="remove" onClick={deleteClickedTodo}>Remove</span>
     </li>
-  )
-}  
+  );
+};
+
 export default Todo;
