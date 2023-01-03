@@ -1,4 +1,4 @@
-import React, { useState, useEffect, setState } from 'react';
+import React, { useState, useEffect } from 'react';
 import TodoModel from '../models/Todo';
 import Todos from '../components/Todos';
 import CreateTodoForm from '../components/CreateTodoForm';
@@ -9,10 +9,9 @@ function TodosContainer () {
 
     useEffect(()=>{
     TodoModel.all().then((res) => {
-    //   console.log(res);
-      setTodos(res)
+      setTodos(res.data)
     });
-  },[])
+  },[todos.length])
   console.log(todos)
 
   const createTodo = (todo) => {
@@ -22,10 +21,9 @@ function TodosContainer () {
     };
 
     TodoModel.create(newTodo).then((res) => {
-        let todoInput = todos.data.slice();
-        todos.data.push(res.data);
-        setState(todoInput);
-        console.log(todos)
+        let todoInput = todos.slice();
+        todos.push(res.data);
+        setTodos(todoInput);
     });
 };
 const deleteTodo = (todo) => {
@@ -36,6 +34,16 @@ const deleteTodo = (todo) => {
       setTodos(filteredTodos)
   })
 }
+const updateTodo = (todo) => {
+  const isUpdatedTodo = (t) => {
+    return t._id === todo._id;
+  };
+  TodoModel.update(todo).then((res) => {
+    let updated = todos.slice();
+    updated.find(isUpdatedTodo).body = todo.body;
+    setTodos(updated);
+  });
+};
 
     return (
       <div className="todosComponent">
@@ -43,7 +51,8 @@ const deleteTodo = (todo) => {
         createTodo={createTodo} />
         <Todos
           todos={todos} 
-          deleteTodo={deleteTodo}/>
+          deleteTodo={deleteTodo}
+          updateTodo={updateTodo}/>
           
       </div>
     );

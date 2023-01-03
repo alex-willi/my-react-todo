@@ -1,16 +1,17 @@
 import React from 'react';
 import Todo from "./Todo";
 
-const TodosList = (props) => {
-  let todos = props.todos.data?.map((todoObj) => (
+const Todos = (props) => {
+  let todos = props.todos.map((todo) => (
     <Todo 
-        key={todoObj._id} 
-        todo={todoObj}
+        key={todo._id} 
+        todo={todo}
         deleteTodo={props.deleteTodo} 
+        updateTodo={props.updateTodo}
         />
   ));
 
   return <ul>{todos}</ul>;
 };
 
-export default TodosList;
+export default Todos;
