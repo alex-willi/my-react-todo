@@ -7,19 +7,19 @@ function TodosContainer () {
   const [todos, setTodos] = useState([])
 
 
-    useEffect(()=>{
-    TodoModel.all().then((res) => {
-      setTodos(res.data)
-    });
-  },[todos.length])
-  console.log(todos)
+  useEffect(()=>{
+  TodoModel.all().then((res) => {
+    setTodos(res.data)
+  });
+},[todos.length])
+console.log(todos)
 
   const createTodo = (todo) => {
     let newTodo = {
-        body: todo,
+      body: todo,
         completed: false
-    };
-
+      };
+      
     TodoModel.create(newTodo).then((res) => {
         let todoInput = todos.slice();
         todos.push(res.data);
